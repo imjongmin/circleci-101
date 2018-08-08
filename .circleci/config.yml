@@ -1,22 +1,54 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+defaults: &defaults
+    working_directory: ~/repo
+    docker:
+      - image: circleci/node:8.11.1
+      - image: circleci/mysql:5.7.22
+        environment:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: test
+          MYSQL_ROOT_HOST: '%'
+      - image: circleci/redis:4.0.10
+
 version: 2
 jobs:
-  one:
-    docker:
-      - image: circleci/ruby:2.4.1-jessie
+  build:
+    <<: *defaults
     steps:
       - checkout
-      - run: echo "A first hello"
-      - run: sleep 25
-  two:
-    docker:
-      - image: circleci/ruby:2.4.1-jessie
+      - run:
+          name: pwd
+          command: pwd
+      - run:
+          name: ls
+          command: ls -altr          
+      - persist_to_workspace:
+          root: ~/repo # workspaceのrootパス（絶対パスかworking_directoryからの相対パス）
+          paths:
+            - . # 共有するパス（rootからの相対パス）
+
+  test:
+    <<: *defaults
     steps:
-      - checkout
-      - run: echo "A more familiar hi"
-      - run: sleep 15
+      - attach_workspace: # workspaceをアタッチする
+          at: ~/repo
+      - run:
+          name: test-pwd
+          command: pwd
+      - run:
+          name: test-ls
+          command: ls -altr
+
 workflows:
   version: 2
-  one_and_two:
+  build_and_test:
     jobs:
-      - one
-      - two
+      - build
+      - test:
+          requires: # buildが成功したら実行する
+            - build
+
