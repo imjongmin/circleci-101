@@ -21,11 +21,25 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install dockerize
+          command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && tar -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+          environment:
+            DOCKERIZE_VERSION: 'v0.6.1'
+      - run:
+          name: Wait for mysql
+          command: ./dockerize -wait tcp://localhost:3306 -timeout 1m
+      - run:
+          name: Wait for redis
+          command: ./dockerize -wait tcp://localhost:6379 -timeout 1m
+      - run:
           name: pwd
           command: pwd
       - run:
           name: ls
-          command: ls -altr          
+          command: ls -altr
+      - run:
+          name: touch
+          command: touch from-build-job
       - persist_to_workspace:
           root: ~/repo # workspaceのrootパス（絶対パスかworking_directoryからの相対パス）
           paths:
@@ -42,6 +56,9 @@ jobs:
       - run:
           name: test-ls
           command: ls -altr
+      - run:
+          name: test-dockerize
+          command: ./dockerize -wait tcp://localhost:6379 -timeout 1m
 
 workflows:
   version: 2
