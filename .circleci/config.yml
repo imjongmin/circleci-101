@@ -2,7 +2,12 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
-defaults: &defaults
+build: &build
+    working_directory: ~/repo
+    docker:
+      - image: circleci/node:8.11.1
+
+test: &test
     working_directory: ~/repo
     docker:
       - image: circleci/node:8.11.1
@@ -17,7 +22,7 @@ defaults: &defaults
 version: 2
 jobs:
   build:
-    <<: *defaults
+    <<: *build
     steps:
       - checkout
       - run:
@@ -46,7 +51,7 @@ jobs:
             - . # 共有するパス（rootからの相対パス）
 
   test:
-    <<: *defaults
+    <<: *test
     steps:
       - attach_workspace: # workspaceをアタッチする
           at: ~/repo
