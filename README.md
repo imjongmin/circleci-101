@@ -116,11 +116,11 @@ http://localhost:8081/
 #### デプロイ
 - 事前確認
 ```
-cap development deploy:check
+$ cap development deploy:check
 ```
 
 - deploy (BRANCHのDefault:develop)
 ```
-cap development deploy
-cap development deploy BRANCH=branch_name
+$ cap development deploy
+$ cap development deploy BRANCH=branch_name
 ```
