@@ -112,13 +112,14 @@ http://localhost:8081/
 - rbenv, ruby install(2.5.1)
 - bundle install
 
-- 確認
+#### 確認
 ```
 cap development deploy:check
 ```
 
-- deploy (BRANCHのDefault:develop)
+#### deploy (BRANCHのDefault:develop)
 ```
 cap development deploy
+or
 cap development deploy BRANCH=branch_name
 ```
