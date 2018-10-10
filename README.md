@@ -113,13 +113,11 @@ http://localhost:8081/
 #### 事前準備
 - rbenv, ruby install(2.5.1)
 - bundle install
-
 #### デプロイ
 - 事前確認
 ```
 cap development deploy:check
 ```
-
 - デプロイ (BRANCHのDefault:develop)
 ```
 cap development deploy
