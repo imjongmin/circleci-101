@@ -96,7 +96,7 @@ $ node merge_swagger.js
 or
 ```
 $ ./build.sh
-```　
+```
 を実行すると、swagger/dist/swagger.ymlが作成されます。
 作成したswagger.ymlをSwaggerEditorで読み込む事で、API設計書を確認することができます。
 
