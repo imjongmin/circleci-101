@@ -108,8 +108,8 @@ $ ./build.sh
 
 http://localhost:8081/
 
-### 開発環境デプロイ
 
+### 開発環境デプロイ
 #### 事前準備
 - rbenv, ruby install(2.5.1)
 - bundle install
@@ -119,7 +119,8 @@ http://localhost:8081/
 ```
 cap development deploy:check
 ```
-- deploy (BRANCHのDefault:develop)
+
+- デプロイ (BRANCHのDefault:develop)
 ```
 cap development deploy
 or
